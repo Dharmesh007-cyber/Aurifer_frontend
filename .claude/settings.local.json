@@ -2,7 +2,9 @@
   "permissions": {
     "allow": [
       "Bash(mv legalai_saas_platform.html /tmp/legalai_saas_platform.html)",
-      "Bash(npx create-next-app@latest . --typescript --tailwind --eslint --app --src-dir --import-alias \"@/*\" --use-npm --yes)"
+      "Bash(npx create-next-app@latest . --typescript --tailwind --eslint --app --src-dir --import-alias \"@/*\" --use-npm --yes)",
+      "Bash(npm install:*)",
+      "Bash(npm run:*)"
     ]
   }
 }

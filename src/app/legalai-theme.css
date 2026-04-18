@@ -1,0 +1,165 @@
+:root {
+  --font-sans: var(--font-manrope);
+  --font-heading: var(--font-manrope);
+  --background: oklch(0.972 0.012 75);
+  --foreground: oklch(0.245 0.03 258);
+  --card: oklch(0.992 0.004 78);
+  --card-foreground: oklch(0.245 0.03 258);
+  --popover: oklch(0.992 0.004 78);
+  --popover-foreground: oklch(0.245 0.03 258);
+  --primary: oklch(0.695 0.185 49);
+  --primary-foreground: oklch(0.985 0.002 90);
+  --secondary: oklch(0.948 0.011 79);
+  --secondary-foreground: oklch(0.245 0.03 258);
+  --muted: oklch(0.958 0.009 79);
+  --muted-foreground: oklch(0.545 0.026 257);
+  --accent: oklch(0.942 0.013 79);
+  --accent-foreground: oklch(0.245 0.03 258);
+  --destructive: oklch(0.59 0.215 28);
+  --border: oklch(0.895 0.011 80);
+  --input: oklch(0.895 0.011 80);
+  --ring: oklch(0.695 0.185 49);
+  --chart-1: oklch(0.695 0.185 49);
+  --chart-2: oklch(0.62 0.11 235);
+  --chart-3: oklch(0.69 0.09 155);
+  --chart-4: oklch(0.74 0.14 82);
+  --chart-5: oklch(0.46 0.06 258);
+  --radius: 0.9rem;
+  --sidebar: oklch(0.985 0.004 78);
+  --sidebar-foreground: oklch(0.245 0.03 258);
+  --sidebar-primary: oklch(0.695 0.185 49);
+  --sidebar-primary-foreground: oklch(0.985 0.002 90);
+  --sidebar-accent: oklch(0.948 0.011 79);
+  --sidebar-accent-foreground: oklch(0.245 0.03 258);
+  --sidebar-border: oklch(0.895 0.011 80);
+  --sidebar-ring: oklch(0.695 0.185 49);
+}
+
+.dark {
+  --background: oklch(0.215 0.02 258);
+  --foreground: oklch(0.98 0.004 80);
+  --card: oklch(0.255 0.02 258);
+  --card-foreground: oklch(0.98 0.004 80);
+  --popover: oklch(0.255 0.02 258);
+  --popover-foreground: oklch(0.98 0.004 80);
+  --primary: oklch(0.73 0.18 49);
+  --primary-foreground: oklch(0.205 0.02 258);
+  --secondary: oklch(0.3 0.018 258);
+  --secondary-foreground: oklch(0.98 0.004 80);
+  --muted: oklch(0.3 0.018 258);
+  --muted-foreground: oklch(0.76 0.016 257);
+  --accent: oklch(0.31 0.018 258);
+  --accent-foreground: oklch(0.98 0.004 80);
+  --destructive: oklch(0.68 0.18 25);
+  --border: oklch(1 0 0 / 12%);
+  --input: oklch(1 0 0 / 15%);
+  --ring: oklch(0.73 0.18 49);
+  --chart-1: oklch(0.73 0.18 49);
+  --chart-2: oklch(0.73 0.11 235);
+  --chart-3: oklch(0.72 0.09 155);
+  --chart-4: oklch(0.8 0.12 82);
+  --chart-5: oklch(0.72 0.04 258);
+  --sidebar: oklch(0.235 0.02 258);
+  --sidebar-foreground: oklch(0.98 0.004 80);
+  --sidebar-primary: oklch(0.73 0.18 49);
+  --sidebar-primary-foreground: oklch(0.205 0.02 258);
+  --sidebar-accent: oklch(0.3 0.018 258);
+  --sidebar-accent-foreground: oklch(0.98 0.004 80);
+  --sidebar-border: oklch(1 0 0 / 10%);
+  --sidebar-ring: oklch(0.73 0.18 49);
+}
+
+body {
+  background-image:
+    radial-gradient(circle at top left, rgba(255, 255, 255, 0.8), transparent 22%),
+    radial-gradient(circle at top right, rgba(245, 147, 60, 0.08), transparent 26%);
+  font-feature-settings: "ss01" 1, "cv01" 1;
+}
+
+@keyframes aboutGlowFloat {
+  0%, 100% {
+    transform: translate3d(0, 0, 0) scale(1);
+    opacity: 0.35;
+  }
+  50% {
+    transform: translate3d(0, -18px, 0) scale(1.08);
+    opacity: 0.55;
+  }
+}
+
+@keyframes aboutCardRise {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes aboutHighlightIn {
+  0% {
+    opacity: 0;
+    transform: translateY(18px) scale(0.98);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes aboutTextSweep {
+  0% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.about-glow {
+  position: absolute;
+  width: 340px;
+  height: 340px;
+  border-radius: 9999px;
+  background: radial-gradient(circle, color-mix(in oklab, var(--primary) 32%, transparent) 0%, transparent 70%);
+  filter: blur(10px);
+  pointer-events: none;
+  animation: aboutGlowFloat 7.5s ease-in-out infinite;
+}
+
+.about-glow-left {
+  left: 10%;
+  top: 18%;
+}
+
+.about-glow-right {
+  right: 9%;
+  top: 28%;
+  animation-delay: 1.8s;
+}
+
+.about-card {
+  backdrop-filter: blur(8px);
+  animation: aboutCardRise 700ms ease-out both;
+}
+
+.about-copy {
+  background: linear-gradient(
+    120deg,
+    color-mix(in oklab, var(--foreground) 72%, var(--primary) 28%) 0%,
+    color-mix(in oklab, var(--foreground) 84%, var(--primary) 16%) 45%,
+    color-mix(in oklab, var(--foreground) 72%, var(--primary) 28%) 100%
+  );
+  background-size: 220% 220%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: aboutTextSweep 8s ease-in-out infinite alternate;
+}
+
+.about-highlight {
+  opacity: 0;
+  animation: aboutHighlightIn 620ms ease-out forwards;
+}
