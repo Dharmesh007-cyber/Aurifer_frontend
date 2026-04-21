@@ -47,6 +47,7 @@ import { AuriferWordmark } from "@/components/ui/aurifer-wordmark";
 import { cn } from "@/lib/utils";
 import { VercelV0Chat } from "@/components/ui/v0-ai-chat";
 import WorkspaceForm from "@/components/ui/form-layout";
+import AnalysisWorkspace from "@/components/analysis-workspace";
 
 type ChatMessage = {
   author: string;
@@ -55,6 +56,16 @@ type ChatMessage = {
   isUser: boolean;
   kind?: "text" | "context-file";
   fileName?: string;
+};
+
+type ProjectDetails = {
+  projectId: string;
+  projectName: string;
+  clientName: string;
+  projectContext: string;
+  documentType: string;
+  prompt: string;
+  referenceFiles: string[];
 };
 
 type BrowserSpeechRecognitionResult = {
@@ -101,8 +112,9 @@ export default function DashboardWorkflow() {
     prompt: 200,
   } as const;
 
-  const [activeSection, setActiveSection] = useState<"overview" | "create-project" | "chatbot" | "finalize" | "templates" | "settings">("overview");
+  const [activeSection, setActiveSection] = useState<"overview" | "create-project" | "chatbot" | "finalize" | "templates" | "settings" | "analysis-workspace">("overview");
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [currentProjectDetails, setCurrentProjectDetails] = useState<ProjectDetails | null>(null);
   const [darkMode, setDarkMode] = useState(false);
   
   // Settings state
@@ -1315,6 +1327,20 @@ ${memoContent}
           </motion.div>
         )}
 
+        {activeSection === "analysis-workspace" && currentProjectDetails && (
+          <AnalysisWorkspace
+            projectDetails={currentProjectDetails}
+            dropboxFiles={dropboxFiles.map((file) => ({
+              ...file,
+              size: parseFloat(file.size.replace(/[^0-9.]/g, '')) * 1024, // Convert to bytes
+              modifiedAt: new Date(file.modified),
+              path: `/${file.folderName}/${file.name}`,
+            }))}
+            onBack={() => setActiveSection("overview")}
+            onProceedToChat={() => setActiveSection("chatbot")}
+          />
+        )}
+
         {activeSection === "chatbot" && (
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -1804,6 +1830,17 @@ ${memoContent}
                 };
                 setProjects([newProject, ...projects]);
 
+                // Set current project details for analysis workspace
+                setCurrentProjectDetails({
+                  projectId: projectData.projectId,
+                  projectName: projectData.projectName,
+                  clientName: projectData.clientName,
+                  projectContext: projectData.projectContext,
+                  documentType: projectData.documentType,
+                  prompt: projectData.prompt,
+                  referenceFiles: projectData.referenceFiles,
+                });
+
                 const initialMessage = {
                   author: "Consultant",
                   time: new Date().toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit" }),
@@ -1840,7 +1877,7 @@ ${memoContent}
                   );
                 }, 1500);
 
-                setActiveSection("chatbot");
+                setActiveSection("analysis-workspace");
                 setProjectData({
                   clientName: "",
                   projectName: "",
